@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}   
+
+    <!-- Stock Log Container -->
+    <div id="stock-log-container">
+        <h3>Stock Price History</h3>
+        <div class="stock-log">
+            <table class="stock-table">
+                <thead>
+                    <tr>
+                        <th>S.N</th>
+                        <th>Company</th>
+                        <th>Open</th>
+                        <th>High</th>
+                        <th>Low</th>
+                        <th>Volume</th>
+                        <th>Close</th>
+                        <th>% Change</th>
+                        <th>Difference</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in stocklog %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ data.company }}</td>
+                        <td>{{ data.open_price }}</td>
+                        <td>{{ data.high_price }}</td>
+                        <td>{{ data.low_price }}</td>
+                        <td>{{ data.volume }}</td>
+                        <td>{{ data.result }}</td>
+                        <td>{{ data.percentage_change }}</td>
+                        <td>{{ data.difference }}</td>
+                        <td>{{ data.timestamp }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10">No stock history available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

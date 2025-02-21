@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="brand-container">
+                <svg class="logo" width="24" height="24" viewBox="0 0 24 24">
+                    <path 
+                    d="M3 12L8 7L13 15L21 5" 
+                    stroke="#28a745" 
+                    stroke-width="2.5" 
+                    fill="none" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    />
+                    <circle cx="3" cy="12" r="1.5" fill="#28a745"/>
+                    <circle cx="8" cy="7" r="1.5" fill="#28a745"/>
+                    <circle cx="13" cy="15" r="1.5" fill="#28a745"/>
+                    <circle cx="21" cy="5" r="1.5" fill="#28a745"/>
+                </svg>
+                <a href="{% url 'home' %}" class="navbar-brand">Stock Price Prediction</a>
+            </div>
+            <div class="dropdown">
+                <button onclick="toggleDropdown()" class="dropdown-button">☰</button>
+                <div id="dropdownMenu" class="dropdown-content">
+                    <a href="{% url 'home' %}" class="active">Dashboard</a>
+                    <a href="{% url 'stocklogs' %}">Stock logs</a>
+                    <a href="#">History</a>
+                </div>
+            </div>
+        </div>
+    </nav>
