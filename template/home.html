@@ -5,7 +5,7 @@
     <!-- Form Container -->
     <div class="form-container">
         <h2>Enter Values</h2>
-        <form method="POST">
+        <form method="POST" id="stockForm">
             {% csrf_token %}
 
             <!-- Company Selection -->
@@ -20,10 +20,10 @@
             <label for="open">Open Price:</label>
             <input type="number" id="open" name="open" step="any" placeholder="Enter open price" required>
 
-            <label for="high">High Price (Auto):</label>
+            <label for="high">High Price (Random 0-10% ↑):</label>
             <input type="number" id="high" name="high" step="any" readonly>
 
-            <label for="low">Low Price (Auto):</label>
+            <label for="low">Low Price (Random 0-10% ↓):</label>
             <input type="number" id="low" name="low" step="any" readonly>
 
             <label for="vol">Volume:</label>
@@ -54,8 +54,8 @@
                 <tr>
                     <td>{{ data.company }}</td>
                     <td>{{ data.open }}</td>
-                    <td>{{ data.high }}</td>
-                    <td>{{ data.low }}</td>
+                    <td>{{ data.high }}</td>  <!-- Now displayed properly -->
+                    <td>{{ data.low }}</td>   <!-- Now displayed properly -->
                     <td>{{ data.vol }}</td>
                     <td>{{ data.result }}</td>
                     <td>{{ data.percentage_change }}</td>
@@ -66,18 +66,30 @@
     </div>
     {% endif %}
 
-    <!-- JavaScript to auto-calculate High and Low -->
+    <!-- JavaScript to auto-calculate High and Low with Random % -->
     <script>
         document.getElementById("open").addEventListener("input", function() {
             let openValue = parseFloat(this.value);
             
             if (!isNaN(openValue) && openValue > 0) {
-                document.getElementById("high").value = (openValue * 1.1).toFixed(2);  // 10% increase
-                document.getElementById("low").value = (openValue * 0.9).toFixed(2);   // 10% decrease
+                let highPercent = Math.random() * 10;  // Random 0-10%
+                let lowPercent = Math.random() * 10;   // Random 0-10%
+                
+                let highValue = openValue * (1 + highPercent / 100);
+                let lowValue = openValue * (1 - lowPercent / 100);
+                
+                document.getElementById("high").value = highValue.toFixed(2);
+                document.getElementById("low").value = lowValue.toFixed(2);
             } else {
                 document.getElementById("high").value = "";
                 document.getElementById("low").value = "";
             }
+        });
+
+        // Ensure calculated High and Low are sent to backend
+        document.getElementById("stockForm").addEventListener("submit", function() {
+            document.getElementById("high").removeAttribute("readonly");
+            document.getElementById("low").removeAttribute("readonly");
         });
     </script>
 
