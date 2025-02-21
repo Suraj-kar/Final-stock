@@ -65,6 +65,3 @@ class MultiLinearRegression:
     def load(cls, file_path):
         data = joblib.load(file_path)
         return cls(weights=data['weights'], bias=data['bias'])
-    
-    
-    
